@@ -25,12 +25,14 @@ for row in soup.find_all('ol', class_='ui-search-layout ui-search-layout--stack 
         item['price'] = card.find( class_='poly-price__current').text.strip()
         item['url'] = card.find('a', class_ = 'poly-component__title')['href']
         item['img'] = card.find('img', class_='poly-component__picture')['src']
+        discount_span = card.find('span', class_='andes-money-amount__discount')
+        item['discount'] = discount_span.text.strip() if discount_span else 'N/A'
         items.append(item)
     if not cards:
         print('No cards found')
 filename = 'tabla.csv'
 with open(filename, 'w', newline='', encoding='utf-8') as f:
-    w = csv.DictWriter(f,['name','price','url','img' ])
+    w = csv.DictWriter(f,['name','price','discount','url','img'])
     w.writeheader()
     for item in items:
         w.writerow(item)
