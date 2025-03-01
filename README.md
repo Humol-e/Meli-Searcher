@@ -2,7 +2,7 @@
 
    # MELI TRACKER
 
-   **MELI TRACKER** is a Python-based application designed to manage and monitor items efficiently. It utilizes CSV files to store and retrieve item data, providing a straightforward approach to item tracking.
+   **MELI TRACKER** is a Python-based application designed to search for items in Mercado Libre and then compare all the data between the products in a csv file.
 
    ## Features
 
