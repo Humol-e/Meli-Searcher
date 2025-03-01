@@ -1,10 +1,7 @@
 import csv
 import requests
 from bs4 import BeautifulSoup
-from selenium import webdriver
-import time
-from bs4 import BeautifulSoup
-import requests
+
 
 headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9'}
 url='https://listado.mercadolibre.com.mx/google-pixel-7#D[A:google%20pixel%207]]'
