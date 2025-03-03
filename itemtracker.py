@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 
 
 headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9'}
-url='https://www.mercadolibre.com.mx/motorola-moto-g34-5g-128-gb-azul-artico-8-gb-ram/p/MLM39407682?pdp_filters=item_id:MLM2120280109#is_advertising=true&searchVariation=MLM39407682&position=1&search_layout=stack&type=pad&tracking_id=556e6f78-2a3e-4ff1-99e8-6935288ab519&is_advertising=true&ad_domain=VQCATCORE_LST&ad_position=1&ad_click_id=YjI3YjI4ZGYtNjhkYy00ZDdmLWE2MmItZjY3MGQ3MzlhYzY1'
 
 url = input("Enter url: ")
 #csvname = input("Enter csv name: ")
@@ -37,11 +36,6 @@ with open(r'./data/' + filename, 'w', newline='', encoding='utf-8') as f:
     w.writeheader()
     for item in items:
         w.writerow(item)
-
-
-
-
-
 
 with open(r"data/item.html", "w", encoding="utf-8") as f:
     f.write(soup.prettify())
