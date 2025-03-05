@@ -11,7 +11,7 @@ st.write('Enter the URL of the product page on MercadoLibre:')
 # Entrada de URL y nombre del archivo CSV
 url = st.text_input('Enter URL:')
 csvname = st.text_input('Enter CSV name:', 'prueba')
-
+dfempty = st.empty()
 if st.button('Track Price'):
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9'}
     r = requests.get(url, headers=headers)
@@ -33,19 +33,20 @@ if st.button('Track Price'):
                     item['price'] = 'N/A'
                 item['price'] = item['price'].replace('"', '').replace(',', '')
                 items.append(item)
+                item['img'] = card.find_all('img', class_='ui-pdp-image ui-pdp-gallery__figure__image')['src']
             if not cards:
                 st.write('No cards found')
 
         filename = csvname + '.csv'
         with open(r'./data/' + filename, 'w', newline='', encoding='utf-8') as f:
-            w = csv.DictWriter(f, ['name', 'price'])
+            w = csv.DictWriter(f, ['name', 'price', 'img'])
             w.writeheader()
             for item in items:
                 w.writerow(item)
 
         st.write(f'Data saved to {filename}')
         df = pd.read_csv(r'./data/' + filename)
-        st.dataframe(df)
+        dfempty.dataframe(df)
         with open(r"data/item.html", "w", encoding="utf-8") as f:
             f.write(soup.prettify())
     else:
