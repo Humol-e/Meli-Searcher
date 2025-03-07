@@ -16,9 +16,11 @@ soup = BeautifulSoup(r.content, 'html.parser')
 items=[]
 
 for row in soup.find_all('div', class_='ui-pdp-container__row ui-pdp-with--separator--fluid ui-pdp-with--separator--40-24'):
+    item = {}
     cards = row.find_all('div', class_='ui-pdp-container__col col-2 mr-24 mt-8')
+    images = row.find_all('div', class_='ui-pdp-container__col col-2 ui-pdp--relative')
     for card in cards:
-        item = {}
+        
         item['name'] = card.find('h1').text
         price = card.find('div', class_ = 'ui-pdp-container__row ui-pdp-container__row--price')
         if price:
@@ -26,13 +28,18 @@ for row in soup.find_all('div', class_='ui-pdp-container__row ui-pdp-with--separ
         else:
             item['price'] = 'N/A'
         item['price'] = item['price'].replace('"', '').replace(',', '')
-        items.append(item)
     if not cards:
         print('No cards found')
+    for img in images:
+        print("ola")
+        item['img'] = img.find('img', class_='ui-pdp-image ui-pdp-gallery__figure__image')['src']
+        items.append([item['img']])
+    if not images:
+        print('No images found')
 
 filename = csvname + '.csv'
 with open(r'./data/' + filename, 'w', newline='', encoding='utf-8') as f:
-    w = csv.DictWriter(f,['name','price'])
+    w = csv.DictWriter(f,['name','price','img'])
     w.writeheader()
     for item in items:
         w.writerow(item)

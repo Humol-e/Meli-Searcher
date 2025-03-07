@@ -1,3 +1,5 @@
 csv
 requests
 bs4
+pandas
+streamlit
