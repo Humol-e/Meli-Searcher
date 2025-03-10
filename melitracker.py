@@ -62,12 +62,9 @@ if st.button('Track Price'):
             newimg = newimg.resize((300, 300))
             return newimg
         load_image(resizedImageUrl)
-        st.image(newimg)
-        dfempty.dataframe(df, column_config={
-            
-            'img': st.column_config.ImageColumn(
-            )
-            })
+        st.image(load_image(resizedImageUrl), width=300)    
+        df['img'] = newimg
+        dfempty.dataframe(df)
 
     else:
         st.write('Failed to retrieve the page.')
