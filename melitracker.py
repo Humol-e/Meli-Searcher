@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import streamlit as st
 import pandas as pd
 from PIL import Image
+from io import StringIO
 from io import BytesIO
 # Configurar la interfaz de Streamlit
 st.title('Price Tracker')
@@ -50,20 +51,19 @@ if st.button('Track Price'):
             w.writeheader()
             for item in items:
                 w.writerow(item)
-        
-
 
         st.write(f'Data saved to {filename}')
         df = pd.read_csv(r'./data/' + filename)
-        url = df['img']
-        
-        def load_image_from_url(url):
-            response = requests.get(url)
-            img = Image.open(BytesIO(response.content))
-            img = img.resize((200, 200))
+        resizedImageUrl = df.iloc[-1]['img']
+        st.write(resizedImageUrl)
+        def load_image(resizedImageUrl):
+            r = requests.get(resizedImageUrl)
+            img = Image.open(BytesIO(r.content))
+            img = img.resize((300, 300))
             return img
-        st.image(img)
-        dfempty.dataframe(df, height=600, column_config={
+        load_image(resizedImageUrl)
+        st.write(img)
+        dfempty.dataframe(df, column_config={
             
             'img': st.column_config.ImageColumn(
             )
@@ -71,3 +71,4 @@ if st.button('Track Price'):
 
     else:
         st.write('Failed to retrieve the page.')
+
