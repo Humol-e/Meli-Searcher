@@ -9,7 +9,7 @@ from io import BytesIO
 # Configurar la interfaz de Streamlit
 st.title('Price Tracker')
 st.write('Enter the URL of the product page on MercadoLibre:')
-
+newimg = st.empty()
 # Entrada de URL y nombre del archivo CSV
 url = st.text_input('Enter URL:')
 csvname = st.text_input('Enter CSV name:', 'prueba')
@@ -58,11 +58,11 @@ if st.button('Track Price'):
         st.write(resizedImageUrl)
         def load_image(resizedImageUrl):
             r = requests.get(resizedImageUrl)
-            img = Image.open(BytesIO(r.content))
-            img = img.resize((300, 300))
-            return img
+            newimg = Image.open(BytesIO(r.content))
+            newimg = newimg.resize((300, 300))
+            return newimg
         load_image(resizedImageUrl)
-        st.write(img)
+        st.image(newimg)
         dfempty.dataframe(df, column_config={
             
             'img': st.column_config.ImageColumn(
