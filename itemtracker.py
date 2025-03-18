@@ -7,7 +7,7 @@ headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWe
 
 url = input("Enter url: ")
 #csvname = input("Enter csv name: ")
-csvname = "prueba"
+csvname = "single"
 r=requests.get(url,headers=headers)
 print(r)
 
@@ -20,7 +20,6 @@ for row in soup.find_all('div', class_='ui-pdp-container__row ui-pdp-with--separ
     cards = row.find_all('div', class_='ui-pdp-container__col col-2 mr-24 mt-8')
     images = row.find_all('div', class_='ui-pdp-container__col col-2 ui-pdp--relative')
     for card in cards:
-        
         item['name'] = card.find('h1').text
         price = card.find('div', class_ = 'ui-pdp-container__row ui-pdp-container__row--price')
         if price:
