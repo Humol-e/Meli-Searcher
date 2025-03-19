@@ -46,7 +46,7 @@ if st.button("Scrape Data"):
         # Check if items were found
         if not items:
             st.write("No items found.")
-
+        else:
             # Display data in a table
             df = pd.DataFrame(items)
             df['price'] = df['price'].astype(float)
@@ -60,6 +60,7 @@ if st.button("Scrape Data"):
                 },
                 hide_index=True,
             )
+
 
 
 
