@@ -6,9 +6,9 @@
 
    ## Features
 
-   - **Item Management**: Add, update, and delete items from the tracking system.
+   - **Item Management**: Add, update, and delete items from the scraper system.
    - **CSV Integration**: Uses `.csv` files for data storage and manipulation.
-   - **Command-Line Interface**: Interact with the application through a user-friendly command-line interface.
+   - **Streamlit Interface**: Interact with the application through a user-friendly streamlit interface.
 
    ## Requirements
 
@@ -50,19 +50,13 @@
       Execute the main application script:
 
       ```bash
-      python app.py
+      streamlit run searcherapp.py
       ```
 
    3. **Interact with the Application**:
 
-      Follow the on-screen prompts to manage your items.
+      Follow the gui to search and manage your items.
 
-   ## File Structure
-
-   - `app.py`: Main application script containing the core functionality.
-   - `tabla.csv`: Additional CSV file for supplementary data.
-   - `requirements.txt`: List of Python dependencies.
-   - `.gitignore`: Specifies files and directories to be ignored by Git.
 
    ## Contributing
 
