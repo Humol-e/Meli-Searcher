@@ -46,16 +46,6 @@ if st.button("Scrape Data"):
         # Check if items were found
         if not items:
             st.write("No items found.")
-        else:
-            # Save data to CSV
-            filename = csvname + '.csv'
-            with open(r'./data/' + filename, 'w', newline='', encoding='utf-8') as f:
-                w = csv.DictWriter(f, ['name', 'price', 'discount', 'url', 'img'])
-                w.writeheader()
-                for item in items:
-                    w.writerow(item)
-
-            print(f"Data saved to `{filename}`")
 
             # Display data in a table
             df = pd.DataFrame(items)
@@ -72,12 +62,6 @@ if st.button("Scrape Data"):
             )
 
 
-            # Option to download the CSV file
-            st.download_button(
-                label="Download CSV",
-                data=open(filename, 'rb').read(),
-                file_name=filename,
-                mime='text/csv'
-            )
+
     else:
         st.write("Failed to retrieve the page. Please check the URL or try again later.")
