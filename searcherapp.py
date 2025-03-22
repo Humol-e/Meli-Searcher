@@ -5,7 +5,7 @@ import streamlit as st
 import pandas as pd
 
 # Streamlit app title and description
-st.title("MercadoLibre Price Tracker")
+st.title("MercadoLibre Item Searcher")
 st.write("Enter a search term to scrape product data from MercadoLibre.")
 
 # Input fields for search term and CSV file name
