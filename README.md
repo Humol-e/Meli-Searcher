@@ -1,8 +1,8 @@
 
 
-   # MELI TRACKER
+   # MELI Searcher
 
-   **MELI TRACKER** is a Python-based application designed to search for items in Mercado Libre and then compare all the data between the products in a csv file.
+   **MELI SEACHER** is a Python-based application designed to search for items in Mercado Libre and then compare all the data between the products in a csv file.
 
    ## Features
 
