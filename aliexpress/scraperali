@@ -29,8 +29,8 @@ for row in soup.find_all('div', class_='hs_ht'):
         item['price'] = item['price'].replace('"', '').replace(',', '')
         urlDiv = card.find('a', class_='l5_b io_it search-card-item')
         item['url'] = urlDiv.get('href')
-        shopUrl = card.find('div', class_='l5_ab')
-        item['shop'] = shopUrl.get('io_ip')
+        shopUrl = card.find('span', class_='io_ip')
+        item['shop'] = shopUrl.text
         if not item['shop']:
             item['shop'] = 'N/A'
         item['img'] = card.find('img', class_='ml_bg')['src']
