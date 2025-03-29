@@ -29,15 +29,19 @@ for row in soup.find_all('div', class_='hs_ht'):
         item['price'] = item['price'].replace('"', '').replace(',', '')
         urlDiv = card.find('a', class_='l5_b io_it search-card-item')
         item['url'] = urlDiv.get('href')
+        shopUrl = card.find('div', class_='l5_ab')
+        item['shop'] = shopUrl.get('io_ip')
+        if not item['shop']:
+            item['shop'] = 'N/A'
         item['img'] = card.find('img', class_='ml_bg')['src']
-        
+
         items.append(item)
     if not cards:
         print('No cards found')
 
 filename = csvname + '.csv'
 with open(r'./data/' + filename, 'w', newline='', encoding='utf-8') as f:
-    w = csv.DictWriter(f,['name','price', 'url','img'])
+    w = csv.DictWriter(f,['name','price', 'shop','url', 'img'])
     w.writeheader()
     for item in items:
         w.writerow(item)
