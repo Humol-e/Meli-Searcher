@@ -3,18 +3,18 @@ import requests
 from bs4 import BeautifulSoup
 import streamlit as st
 import pandas as pd
-
 # Streamlit app title and description
 st.title("MercadoLibre Item Searcher")
 st.write("Enter a search term to scrape product data from MercadoLibre.")
-
 # Input fields for search term and CSV file name
-searchurl = st.text_input("Enter search term:", "google-pixel-7")
-csvname = st.text_input("Enter CSV name:", "output")
-
+searchurl = st.text_input("Enter search term:")
 # Base URL for MercadoLibre
 baseurl = 'https://listado.mercadolibre.com.mx/'
 url = baseurl + searchurl.replace('-', '.').lower()
+alieBaseUrl = 'https://es.aliexpress.com/w/wholesale-'
+alieUrl = alieBaseUrl + searchurl.replace('-', '.').lower() + '.html'
+
+df, dfa = st.columns(2)
 
 # Button to trigger the scraping process
 if st.button("Scrape Data"):
@@ -23,11 +23,10 @@ if st.button("Scrape Data"):
     }
     r = requests.get(url, headers=headers)
     print(f"Status Code: {r.status_code}")
-
+    # Check if the request was successful (status code 200)
     if r.status_code == 200:
         soup = BeautifulSoup(r.content, 'html.parser')
         items = []
-
         # Scraping logic
         for row in soup.find_all('ol', class_='ui-search-layout ui-search-layout--stack shops__layout'):
             cards = row.find_all('li', class_='ui-search-layout__item shops__layout-item')
@@ -37,7 +36,6 @@ if st.button("Scrape Data"):
                 price_span = card.find('span', class_='andes-money-amount__fraction')
                 item['price'] = price_span.text.strip().replace(',', '') if price_span else 'N/A'
                 item['img'] = card.find('img', class_='poly-component__picture')['src']
-
                 item['url'] = card.find('a', class_='poly-component__title')['href']
                 discount_span = card.find('span', class_='andes-money-amount__discount')
                 item['discount'] = discount_span.text.strip() if discount_span else 'N/A'
@@ -50,7 +48,6 @@ if st.button("Scrape Data"):
             # Display data in a table
             df = pd.DataFrame(items)
             df['price'] = df['price'].astype(float)
-
             st.data_editor(
                 df,
                 column_config={
@@ -60,9 +57,5 @@ if st.button("Scrape Data"):
                 },
                 hide_index=True,
             )
-
-
-
-
     else:
         st.write("Failed to retrieve the page. Please check the URL or try again later.")
