@@ -1,0 +1,43 @@
+import csv
+import requests
+from bs4 import BeautifulSoup
+
+
+headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9'}
+
+url = input("Enter url: ")
+#csvname = input("Enter csv name: ")
+csvname = "prueba"
+r=requests.get(url,headers=headers)
+print(r)
+
+soup = BeautifulSoup(r.content, 'html.parser')
+
+items=[]
+
+for row in soup.find_all('div', class_='hs_ht'):
+    cards = row.find_all('div', class_='hs_bw search-item-card-wrapper-gallery')
+    for card in cards:
+        item = {}
+        namediv = card.find('div', class_='l5_ab')
+        item['name'] = namediv.get('title') 
+        price = card.find('div', class_ = 'title')
+        if price:
+            item['price'] = price.find('div', class_='l5_k6').text.strip()
+        else:
+            item['price'] = 'N/A'
+        item['price'] = item['price'].replace('"', '').replace(',', '')
+        item['img'] = card.find('img', class_='ml_bg')['src']
+        items.append(item)
+    if not cards:
+        print('No cards found')
+
+filename = csvname + '.csv'
+with open(r'./data/' + filename, 'w', newline='', encoding='utf-8') as f:
+    w = csv.DictWriter(f,['name','price', 'img'])
+    w.writeheader()
+    for item in items:
+        w.writerow(item)
+
+with open(r"data/ali.html", "w", encoding="utf-8") as f:
+    f.write(soup.prettify())
