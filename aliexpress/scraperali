@@ -19,22 +19,25 @@ for row in soup.find_all('div', class_='hs_ht'):
     cards = row.find_all('div', class_='hs_bw search-item-card-wrapper-gallery')
     for card in cards:
         item = {}
-        namediv = card.find('div', class_='l5_ag')
-        item['name'] = namediv.get('title') 
+        nameDiv = card.find('div', class_='l5_ag')
+        item['name'] = nameDiv.get('title') 
         price = card.find('div', class_ = 'l5_k6').text.strip()
         if price:
             item['price'] = price
         else:
             item['price'] = 'N/A'
         item['price'] = item['price'].replace('"', '').replace(',', '')
+        urlDiv = card.find('a', class_='l5_b io_it search-card-item')
+        item['url'] = urlDiv.get('href')
         item['img'] = card.find('img', class_='ml_bg')['src']
+        
         items.append(item)
     if not cards:
         print('No cards found')
 
 filename = csvname + '.csv'
 with open(r'./data/' + filename, 'w', newline='', encoding='utf-8') as f:
-    w = csv.DictWriter(f,['name','price', 'img'])
+    w = csv.DictWriter(f,['name','price', 'url','img'])
     w.writeheader()
     for item in items:
         w.writerow(item)
