@@ -4,8 +4,8 @@ from bs4 import BeautifulSoup
 
 
 headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9'}
-
-url = input("Enter url: ")
+url = "https://es.aliexpress.com/w/wholesale-pila-samsung-es90.html"
+#url = input("Enter url: ")
 #csvname = input("Enter csv name: ")
 csvname = "prueba"
 r=requests.get(url,headers=headers)
@@ -19,11 +19,11 @@ for row in soup.find_all('div', class_='hs_ht'):
     cards = row.find_all('div', class_='hs_bw search-item-card-wrapper-gallery')
     for card in cards:
         item = {}
-        namediv = card.find('div', class_='l5_ab')
+        namediv = card.find('div', class_='l5_ag')
         item['name'] = namediv.get('title') 
-        price = card.find('div', class_ = 'title')
+        price = card.find('div', class_ = 'l5_k6').text.strip()
         if price:
-            item['price'] = price.find('div', class_='l5_k6').text.strip()
+            item['price'] = price
         else:
             item['price'] = 'N/A'
         item['price'] = item['price'].replace('"', '').replace(',', '')
