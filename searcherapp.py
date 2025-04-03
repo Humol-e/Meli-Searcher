@@ -5,10 +5,10 @@ import pandas as pd
 
 # Streamlit app title and description
 st.title("WEB Item Searcher")
-st.write("Enter a search term to scrape product data from AliExpress.")
+st.write("Enter a search term to scrape product data from AliExpress and MercadoLibre.")
 
 # Input fields for search term and CSV file name
-searchurl = st.text_input("Enter search term:", "pila-samsung-es90")
+searchurl = st.text_input("Enter search term:", "example")
 
 # Base URL for AliExpress
 alieBaseUrl = 'https://es.aliexpress.com/w/wholesale-'
@@ -56,11 +56,12 @@ if st.button("Scrape Data"):
                 price = card.find('div', class_='l5_k6')
                 item['price'] = price.text.strip().replace('"', '').replace(',', '') if price else 'N/A'
                 urlDiv = card.find('a', class_='l5_b io_it search-card-item')
-                item['url'] = urlDiv.get('href') if urlDiv else 'N/A'
                 shopUrl = card.find('span', class_='io_ip')
                 item['shop'] = shopUrl.text.strip() if shopUrl else 'N/A'
                 img = card.find('img', class_='ml_bg')
                 item['img'] = img['src'] if img else 'N/A'
+                item['url'] = urlDiv.get('href') if urlDiv else 'N/A'
+
                 items_ae.append(item)
 
     # Mostrar los dataframes en columnas distintas
